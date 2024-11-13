@@ -1,0 +1,11 @@
+{% extends 'layout/default.html' %}
+{% block content %}
+
+<h1>Add</h1>
+<form method="POST">
+  {% csrf_token %}
+  {{news}}
+  <input class="btn btn-success" type="submit" value="Add">
+</form>
+
+{% endblock %}
