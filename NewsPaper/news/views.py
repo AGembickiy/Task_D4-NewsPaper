@@ -13,14 +13,6 @@ class PostList(ListView):
     context_object_name = 'news'
     ordering = ['-date_time_creation']
     paginate_by = 1
-    form_class = PostForm
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            form.save()
-        return super().get(request, *args, **kwargs)
-
 
 class PostDetail(DetailView):
     model = Post
@@ -48,18 +40,27 @@ class PostSearch(ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
         return context
-
-
-
-class PostsForm(ListView):
-    model = Post
-    template_name = 'news/add.html'
-    context_object_name = 'add'
-    form_class = PostForm
-    paginate_by = 1
-
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
         return super().get(request, *args, **kwargs)
+
+class PostsForm(ListView):
+   model = Post
+   template_name = 'news/add.html'
+   context_object_name = 'add'
+   form_class = PostForm
+   paginate_by = 1
+
+   def get_context_data(self, **kwargs):
+       context = super().get_context_data(**kwargs)
+       context['form'] = PostForm()
+       return context
+
+   def post(self, request, *args, **kwargs):
+       form = self.form_class(request.POST)
+       if form.is_valid():
+           form.save()
+       return super().get(request, *args, **kwargs)
+
