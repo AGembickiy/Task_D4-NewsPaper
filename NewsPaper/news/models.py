@@ -33,7 +33,8 @@ class Author(models.Model):
         return self.rating_author
 
     def __str__(self):
-        return f'Имя автара: {self.user.username}\nРейтинг автара: {self.rating_author}'
+        # f'Имя автара: {self.user.username}\nРейтинг автара: {self.rating_author}'
+        return f'{self.user.first_name} {self.user.last_name}'
 
 class Category(models.Model):
     topic = models.CharField(max_length=100, unique=True)
@@ -60,7 +61,6 @@ class Post(models.Model):
 
     heading = models.CharField(
         max_length=64,
-        help_text="Забыли ввести заголовок статьи."
     )
     text_post = models.TextField()
     rating_post = models.IntegerField(default=0)
@@ -79,6 +79,9 @@ class Post(models.Model):
             result = f'{self.text_post[0:125]}...'
             return result
         return self.text_post
+
+    def get_absolute_url(self):
+        return f'/news/{self.id}'
 
     def __str__(self):
 

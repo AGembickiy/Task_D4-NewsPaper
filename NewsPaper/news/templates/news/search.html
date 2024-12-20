@@ -1,5 +1,8 @@
 {% extends 'layout/default.html' %}
 {% load custom_filters %}
+{% block title %}
+ Поиск
+{% endblock %}
 {% block content %}
 
 <h1>Результат поиска</h1>
@@ -32,7 +35,8 @@
            {{ search.heading }}
        </td>
        <td>
-           {{ search.author }}
+           {{ search.author.user.first_name }}
+           {{ search.author.user.last_name }}
        </td>
 
 

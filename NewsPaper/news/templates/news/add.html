@@ -1,8 +1,18 @@
 {% extends 'layout/default.html' %}
 
+{% block style %}
+      div, input {
+        margin-top: 25px;
+      }
+
+{% endblock style %}
+
+{% block title %}
+ Добавление
+{% endblock %}
 {% block content %}
 
-<h1>Forms</h1>
+<h1>Добовление Post</h1>
 <form method="POST">
   {% csrf_token %}
   {{form}}

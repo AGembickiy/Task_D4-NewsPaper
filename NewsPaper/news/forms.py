@@ -1,25 +1,28 @@
-from django.forms import ModelForm
-from django import forms
+from django.forms import ModelForm, TextInput, Textarea
+
 from .models import Post
 
 
 class PostForm(ModelForm):
+   def __init__(self, *args, **kwargs):
+       super().__init__(*args, **kwargs)
+       self.fields['author'].empty_label = 'Автор не выбран'
+
+
+
    class Meta:
        model = Post
        fields = ['author','post_status', 'heading', 'text_post']
        widgets = {
-           'author': forms.TextInput(attrs={
-               'class': 'form-control',
-           }),
-           'post_status': forms.Select(attrs={
-               'class': 'form-control',
-           },
-           choices=Post.ARTICLE_OR_NEWS_SELECTION_FIELD,
-           ),
-       #     'heading': forms.Select(attrs={
-       #         'class': 'form-control',
-       #     }),
-       #     'text_post': forms.Textarea(attrs={
-       #         'class': 'form-control',
-       #     }),
+           'text_post': Textarea(attrs={'cols': 150})
        }
+       labels = {
+           'author': 'Выбор автора',
+           'post_status': 'Выбор вида (новость/статья)',
+           'heading': 'Название статьи',
+           'text_post': 'Текст новости/статьи',
+
+       }
+
+
+

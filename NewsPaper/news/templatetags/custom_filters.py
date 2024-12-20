@@ -3,7 +3,6 @@ from django import template
 register = template.Library()
 
 @register.filter(name='censor')
-
 def censor(value):
     variants = ['mat', 'abc', 'dolor', 'no', 'vel']  # непристойные выражения
     strk = value.split()
